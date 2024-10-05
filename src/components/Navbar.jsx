@@ -1,4 +1,16 @@
+import React from "react";
+import { useDispatch } from "react-redux";
+import { setSearchQuery } from "../store/slices/productSlice"; // Redux action'ı
+
 const Navbar = () => {
+  const dispatch = useDispatch();
+
+  // Arama input'u değiştiğinde çalışacak fonksiyon
+  const handleSearchChange = (e) => {
+    const query = e.target.value;
+    dispatch(setSearchQuery(query)); // Arama sorgusunu Redux store'a gönder
+  };
+
   return (
     <nav className="bg-blue-500 text-white p-4 px-8 flex items-center justify-between">
       {/* Sol Kısım - Logo */}
@@ -10,6 +22,7 @@ const Navbar = () => {
           type="text"
           placeholder="Search"
           className="w-full p-2 rounded-lg text-gray-800"
+          onChange={handleSearchChange} // Arama sorgusunu işleme
         />
       </div>
 

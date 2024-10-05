@@ -1,20 +1,20 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "../store/slices/productSlice";
+import { fetchAllProducts } from "../store/slices/productSlice"; // fetchAllProducts'ı kullanıyoruz
 import { addToCart } from "../store/slices/cartSlice";
 import { Link } from "react-router-dom";
 
 const ProductList = () => {
   const dispatch = useDispatch();
   const {
-    filteredItems: products,
+    paginatedItems: products, // Pagination ile gelen ürünler
     status,
-    currentPage,
   } = useSelector((state) => state.products);
 
+  // İlk sayfa yüklendiğinde tüm ürünleri fetch et
   useEffect(() => {
-    dispatch(fetchProducts(currentPage)); // Ürünleri mevcut sayfaya göre çek
-  }, [dispatch, currentPage]);
+    dispatch(fetchAllProducts()); // Tüm ürünleri çekiyoruz
+  }, [dispatch]);
 
   const handleAddToCart = (product) => {
     dispatch(addToCart(product));

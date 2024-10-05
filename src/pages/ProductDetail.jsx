@@ -5,8 +5,8 @@ import { addToCart } from "../store/slices/cartSlice.js";
 
 const ProductDetail = () => {
   const { id } = useParams();
-  const product = useSelector((state) =>
-    state.products.items.find((product) => product.id === id),
+  const product = useSelector(
+    (state) => state.products.allItems.find((product) => product.id === id), // allItems'tan ürünü bul
   );
   const dispatch = useDispatch();
 

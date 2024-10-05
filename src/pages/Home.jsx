@@ -6,13 +6,21 @@ import {
   setBrandFilter,
   setModelFilter,
   setSortBy,
+  fetchAllProducts,
 } from "../store/slices/productSlice";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { items: products } = useSelector((state) => state.products);
+  const { allItems: products, filters } = useSelector(
+    (state) => state.products,
+  ); // Tüm ürünler ve filtreler burada
   const [brands, setBrands] = useState([]); // Markaları tutmak için state
   const [models, setModels] = useState([]); // Modelleri tutmak için state
+
+  // İlk açılışta tüm ürünleri fetch et
+  useEffect(() => {
+    dispatch(fetchAllProducts()); // Tüm ürünleri yükle
+  }, [dispatch]);
 
   // Markalar ve modelleri belirlemek için useEffect kullanıyoruz
   useEffect(() => {
@@ -32,14 +40,24 @@ const Home = () => {
   const handleBrandChange = (e) => {
     const brand = e.target.value;
     const checked = e.target.checked;
-    dispatch(setBrandFilter(checked ? [brand] : [])); // Marka filtresini gönder
+
+    const updatedBrands = checked
+      ? [...filters.brand, brand] // Eğer checkbox seçiliyse, markayı ekle
+      : filters.brand.filter((b) => b !== brand); // Eğer checkbox kaldırıldıysa, markayı çıkar
+
+    dispatch(setBrandFilter(updatedBrands)); // Yeni filtreyi güncelle
   };
 
   // Model filtreleme fonksiyonu
   const handleModelChange = (e) => {
     const model = e.target.value;
     const checked = e.target.checked;
-    dispatch(setModelFilter(checked ? [model] : [])); // Model filtresini gönder
+
+    const updatedModels = checked
+      ? [...filters.model, model] // Eğer checkbox seçiliyse, modeli ekle
+      : filters.model.filter((m) => m !== model); // Eğer checkbox kaldırıldıysa, modeli çıkar
+
+    dispatch(setModelFilter(updatedModels)); // Yeni filtreyi güncelle
   };
 
   // Sıralama seçeneği değiştiğinde çağrılır
@@ -57,6 +75,7 @@ const Home = () => {
             <input
               type="radio"
               name="sort"
+              checked={filters.sortBy === "old-to-new"}
               onChange={() => handleSortChange("old-to-new")}
             />{" "}
             Old to New
@@ -65,6 +84,7 @@ const Home = () => {
             <input
               type="radio"
               name="sort"
+              checked={filters.sortBy === "new-to-old"}
               onChange={() => handleSortChange("new-to-old")}
             />{" "}
             New to Old
@@ -73,6 +93,7 @@ const Home = () => {
             <input
               type="radio"
               name="sort"
+              checked={filters.sortBy === "price-high-to-low"}
               onChange={() => handleSortChange("price-high-to-low")}
             />{" "}
             Price High to Low
@@ -81,6 +102,7 @@ const Home = () => {
             <input
               type="radio"
               name="sort"
+              checked={filters.sortBy === "price-low-to-high"}
               onChange={() => handleSortChange("price-low-to-high")}
             />{" "}
             Price Low to High
@@ -95,6 +117,7 @@ const Home = () => {
               <input
                 type="checkbox"
                 value={brand}
+                checked={filters.brand.includes(brand)} // Marka seçiliyse işaretle
                 onChange={handleBrandChange}
               />{" "}
               {brand}
@@ -110,6 +133,7 @@ const Home = () => {
               <input
                 type="checkbox"
                 value={model}
+                checked={filters.model.includes(model)} // Model seçiliyse işaretle
                 onChange={handleModelChange}
               />{" "}
               {model}
@@ -127,7 +151,6 @@ const Home = () => {
       {/* Sağ panel (Sepet ve Toplam Fiyat) */}
       <div className="col-span-3 p-4 rounded">
         <h3 className="font-bold mb-4">Sepetiniz</h3>
-        {/* Sepetteki ürünleri burada gösterebilirsiniz */}
         <div className="border p-2 mb-4">
           <p>Samsung s22</p>
           <div className="flex items-center">
@@ -137,7 +160,6 @@ const Home = () => {
           </div>
           <p>12.000₺</p>
         </div>
-
         <div className="border p-2 mb-4">
           <p>Lenovo PC</p>
           <div className="flex items-center">
@@ -147,7 +169,6 @@ const Home = () => {
           </div>
           <p>18.000₺</p>
         </div>
-
         <div className="border p-2 mb-4">
           <p>iPhone 12</p>
           <div className="flex items-center">
@@ -157,7 +178,6 @@ const Home = () => {
           </div>
           <p>15.000₺</p>
         </div>
-
         <h4 className="text-lg font-bold mb-4">Total Price: 117.000₺</h4>
         <button className="bg-blue-500 text-white py-2 px-4 w-full hover:bg-blue-600">
           Checkout
