@@ -20,7 +20,7 @@ const ProductDetail = () => {
     <div>
       <div className="w-full mt-4 px-8">
         <button
-          className="py-2 hover:bg-blue-200 flex items-center"
+          className="py-2 pr-2 hover:bg-blue-200 flex items-center"
           onClick={() => navigate("/")}
         >
           <svg

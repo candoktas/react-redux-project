@@ -82,7 +82,7 @@ const FilterComponent = () => {
 
   return (
     <div className="p-4 rounded">
-      <div className="shadow-lg p-2 mb-8">
+      <div className="shadow-lg px-2 py-2 mb-8">
         <h3 className="font-bold mb-4">Sort By</h3>
         <ul className="mb-3">
           <li className="flex items-center text-sm mb-2">
@@ -128,7 +128,7 @@ const FilterComponent = () => {
         </ul>
       </div>
 
-      <div className="shadow-lg p-2 mb-8">
+      <div className="shadow-lg px-2 py-4 mb-8">
         <h3 className="font-bold">Brands</h3>
         <div className="rounded-md">
           <div className="relative">
@@ -171,7 +171,7 @@ const FilterComponent = () => {
         </div>
       </div>
 
-      <div className="shadow-lg p-2">
+      <div className="shadow-lg px-2 py-4">
         <h3 className="font-bold">Model</h3>
         <div className="rounded-md">
           <div className="relative">

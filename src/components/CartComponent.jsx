@@ -23,24 +23,23 @@ const CartComponent = () => {
 
   return (
     <div className="rounded">
-      <div className="shadow-lg px-4 pb-2">
+      <div className="shadow-lg px-2 pb-2">
         <h3 className="font-bold text-sm mb-4 px-2 pt-2">Your Cart</h3>
         {cartItems.map((item) => (
           <div
             className="p-2 mb-4 flex justify-between items-center flex-wrap"
             key={item.id}
           >
-            <div className="w-1/2">
+            <div className="basis-1/2">
               <div>
                 <p className="text-xs">{item.brand}</p>
                 <span className="text-xs">{item.model}</span>
               </div>
-              {/* Burada fiyat miktar ile çarpılarak gösteriliyor */}
-              <p className="text-xs">
+              <p className="text-xs text-primary">
                 {(item.price * item.quantity).toFixed(2)}₺
               </p>
             </div>
-            <div className="flex items-center w-1/2">
+            <div className="flex justify-end basis-1/2">
               <button
                 className="bg-[#f3f4f6] px-3 py-1"
                 onClick={() => handleDecrement(item.id)}
@@ -68,7 +67,7 @@ const CartComponent = () => {
           </span>
         </h4>
 
-        <button className="bg-primary text-white py-2 px-4 w-full hover:bg-blue-600">
+        <button className="bg-primary text-white text-center py-2 px-4 w-full hover:bg-blue-600 truncate">
           Checkout
         </button>
       </div>
