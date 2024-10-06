@@ -14,7 +14,6 @@ const Pagination = () => {
     const paginationItems = [];
     const maxPagesToShow = 5;
 
-    // İlk sayfa
     paginationItems.push(
       <button
         key={1}
@@ -37,7 +36,6 @@ const Pagination = () => {
       );
     }
 
-    // Ortadaki sayfalar
     for (
       let i = Math.max(2, currentPage - 1);
       i <= Math.min(totalPages - 1, currentPage + 1);
@@ -66,7 +64,6 @@ const Pagination = () => {
       );
     }
 
-    // Son sayfa
     paginationItems.push(
       <button
         key={totalPages}
@@ -86,7 +83,6 @@ const Pagination = () => {
 
   return (
     <div className="flex justify-center items-center space-x-2 my-4">
-      {/* Sol ok tuşu */}
       <button
         className={`px-3 py-1 rounded-lg disabled:pointer-events-none ${
           currentPage === 1 ? "text-gray-400" : "text-gray-500"
@@ -110,10 +106,8 @@ const Pagination = () => {
         </svg>
       </button>
 
-      {/* Sayfa numaraları */}
       {renderPagination()}
 
-      {/* Sağ ok tuşu */}
       <button
         className={`px-3 py-1 rounded-lg disabled:pointer-events-none ${
           currentPage === totalPages ? "text-gray-400" : "text-gray-500"

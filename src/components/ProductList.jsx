@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchAllProducts } from "../store/slices/productSlice";
 import { addToCart } from "../store/slices/cartSlice";
 import { Link } from "react-router-dom";
+import Loading from "./Loading.jsx";
 
 const ProductList = () => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const ProductList = () => {
   };
 
   if (status === "loading") {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   if (status === "failed") {

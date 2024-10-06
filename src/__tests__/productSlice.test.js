@@ -2,7 +2,6 @@ import { setBrandFilter, setModelFilter } from "../store/slices/productSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import productReducer from "../store/slices/productSlice";
 
-// Mock verilerle store'u manuel oluşturuyoruz
 const mockStore = configureStore({
   reducer: {
     products: productReducer,
@@ -38,7 +37,7 @@ describe("Product Slice Tests", () => {
     const updatedState = mockStore.getState().products;
 
     expect(updatedState.filters.brand).toEqual(brandsToFilter);
-    expect(updatedState).not.toEqual(initialState); // State güncellenmiş olmalı
+    expect(updatedState).not.toEqual(initialState);
   });
 
   test("should update the model filter", () => {
@@ -49,6 +48,6 @@ describe("Product Slice Tests", () => {
     const updatedState = mockStore.getState().products;
 
     expect(updatedState.filters.model).toEqual(modelsToFilter);
-    expect(updatedState).not.toEqual(initialState); // State güncellenmiş olmalı
+    expect(updatedState).not.toEqual(initialState);
   });
 });

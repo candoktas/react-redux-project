@@ -1,4 +1,3 @@
-// CartComponent.test.js
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import { Provider } from "react-redux";
@@ -13,7 +12,6 @@ import { act } from "react";
 
 describe("CartComponent Tests", () => {
   beforeEach(() => {
-    // localStorage mocklama
     Storage.prototype.getItem = jest.fn(() => null);
     Storage.prototype.setItem = jest.fn(() => null);
   });
@@ -45,9 +43,8 @@ describe("CartComponent Tests", () => {
       store.dispatch(addToCart(product));
     });
 
-    // BMW ve X5'i ayrı ayrı kontrol ediyoruz
-    const brand = screen.getByText(/BMW/i); // BMW'yi buluyoruz
-    const model = screen.getByText(/X5/i); // X5'i buluyoruz
+    const brand = screen.getByText(/BMW/i);
+    const model = screen.getByText(/X5/i);
     expect(brand).toBeInTheDocument();
     expect(model).toBeInTheDocument();
   });
@@ -66,11 +63,11 @@ describe("CartComponent Tests", () => {
     });
 
     await waitFor(() => {
-      const quantityElements = screen.getAllByText(/\d+/); // Herhangi bir sayıyı içeren öğeleri bul
+      const quantityElements = screen.getAllByText(/\d+/);
       const quantity = quantityElements.find((element) =>
         /\d/.test(element.textContent),
-      ); // Sadece sayı içeren öğeyi bul
-      expect(quantity).toBeInTheDocument(); // Öğenin var olup olmadığını kontrol et
+      );
+      expect(quantity).toBeInTheDocument();
     });
   });
 
@@ -89,11 +86,11 @@ describe("CartComponent Tests", () => {
     });
 
     await waitFor(() => {
-      const quantityElements = screen.getAllByText(/\d+/); // Herhangi bir sayıyı içeren öğeleri bul
+      const quantityElements = screen.getAllByText(/\d+/);
       const quantity = quantityElements.find((element) =>
         /\d/.test(element.textContent),
-      ); // Sadece sayı içeren öğeyi bul
-      expect(quantity).toBeInTheDocument(); // Öğenin var olup olmadığını kontrol et
+      );
+      expect(quantity).toBeInTheDocument();
     });
   });
 
@@ -107,12 +104,12 @@ describe("CartComponent Tests", () => {
         </Provider>,
       );
       store.dispatch(addToCart(product));
-      store.dispatch(incrementQuantity({ id: 1 })); // İkinci ürünü ekle
+      store.dispatch(incrementQuantity({ id: 1 }));
     });
 
     await waitFor(() => {
       const totalPriceElement = screen.getByTestId("total-price");
-      expect(totalPriceElement.textContent).toMatch(/₺/); // Sadece ₺ sembolünü içerdiğini kontrol ediyoruz
+      expect(totalPriceElement.textContent).toMatch(/₺/);
     });
   });
 });

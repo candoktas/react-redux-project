@@ -41,11 +41,11 @@ const ProductDetail = () => {
         </button>
       </div>
       <div className="flex flex-col md:flex-row items-center md:items-start em px-8 py-2 gap-6">
-        <div className="flex flex-col md:flex-row h-auto w-auto md:h-1/2 md:w-4/5 border-blue-600 shadow-md p-4 md:justify-between">
+        <div className="flex flex-col md:flex-row h-auto w-auto md:h-auto md:w-4/5 border-blue-600 shadow-md p-4 md:justify-between">
           <img
             src={product.image}
             alt={product.name}
-            className="md:w-1/2 h-auto object-cover rounded"
+            className="md:w-1/2 w-auto h-auto object-cover rounded"
           />
           <div className="md:ml-8 mt-4 md:mt-0 flex flex-col justify-between md:w-1/2 h-auto">
             <div className="mb-8">
@@ -56,7 +56,7 @@ const ProductDetail = () => {
                 {product.price}₺
               </p>
             </div>
-            <div>
+            <div className="flex-grow flex-shrink-0">
               <button
                 className="bg-primary text-xl font-bold text-white py-2 px-4 w-full hover:bg-blue-600 my-3"
                 onClick={() => dispatch(addToCart(product))}

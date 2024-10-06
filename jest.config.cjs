@@ -1,5 +1,5 @@
 module.exports = {
-  setupFilesAfterEnv: ["<rootDir>/jest-setup.js"], // Bu satırı ekleyin
+  setupFilesAfterEnv: ["<rootDir>/jest-setup.js"],
   transform: {
     "^.+\\.(js|jsx)$": "babel-jest",
   },

@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// localStorage'dan sepet verilerini yükleyen fonksiyon
 const loadCartFromLocalStorage = () => {
   try {
     const serializedState = localStorage.getItem("cart");
@@ -13,7 +12,6 @@ const loadCartFromLocalStorage = () => {
   }
 };
 
-// localStorage'a sepet verilerini kaydeden fonksiyon
 const saveCartToLocalStorage = (state) => {
   try {
     const serializedState = JSON.stringify(state);
@@ -23,7 +21,6 @@ const saveCartToLocalStorage = (state) => {
   }
 };
 
-// initialState localStorage'dan yükleniyor
 const initialState = loadCartFromLocalStorage();
 
 const cartSlice = createSlice({
@@ -40,16 +37,15 @@ const cartSlice = createSlice({
         state.items.push({ ...action.payload, quantity: 1 });
       }
 
-      // Toplam fiyatı güncelle
       state.totalPrice += parseFloat(action.payload.price);
-      saveCartToLocalStorage(state); // Sepeti localStorage'a kaydet
+      saveCartToLocalStorage(state);
     },
     incrementQuantity: (state, action) => {
       const product = state.items.find((item) => item.id === action.payload.id);
       if (product) {
         product.quantity++;
         state.totalPrice += parseFloat(product.price);
-        saveCartToLocalStorage(state); // Sepeti localStorage'a kaydet
+        saveCartToLocalStorage(state);
       }
     },
     decrementQuantity: (state, action) => {
@@ -62,7 +58,7 @@ const cartSlice = createSlice({
           state.totalPrice -= parseFloat(product.price);
           state.items = state.items.filter((item) => item.id !== product.id);
         }
-        saveCartToLocalStorage(state); // Sepeti localStorage'a kaydet
+        saveCartToLocalStorage(state);
       }
     },
   },

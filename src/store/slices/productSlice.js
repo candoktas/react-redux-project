@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-// Tüm ürünleri fetch eden thunk
 export const fetchAllProducts = createAsyncThunk(
   "products/fetchAllProducts",
   async () => {
@@ -8,16 +7,16 @@ export const fetchAllProducts = createAsyncThunk(
       `https://5fc9346b2af77700165ae514.mockapi.io/products`,
     );
     const data = await response.json();
-    return data; // Tüm ürünler
+    return data;
   },
 );
 
 const productSlice = createSlice({
   name: "products",
   initialState: {
-    allItems: [], // Tüm ürünler (filtreleme için)
-    filteredItems: [], // Filtrelenmiş ürünler
-    paginatedItems: [], // Pagination ile gösterilecek ürünler
+    allItems: [],
+    filteredItems: [],
+    paginatedItems: [],
     status: null,
     currentPage: 1,
     totalPages: 1,
@@ -25,13 +24,12 @@ const productSlice = createSlice({
       brand: [],
       model: [],
       sortBy: "",
-      searchQuery: "", // Arama için kullanılan filtre
+      searchQuery: "",
     },
   },
   reducers: {
     setPage: (state, action) => {
       state.currentPage = action.payload;
-      // Sayfa numarası değiştiğinde, pagination işlemi yapılır
       const start = (state.currentPage - 1) * 12;
       const end = start + 12;
       state.paginatedItems = state.filteredItems.slice(start, end);
@@ -39,9 +37,9 @@ const productSlice = createSlice({
     setBrandFilter: (state, action) => {
       state.filters.brand = action.payload;
       state.filteredItems = filterProducts(state.allItems, state.filters);
-      state.totalPages = Math.ceil(state.filteredItems.length / 12); // Filtrelenmiş ürünler için sayfa sayısını güncelle
-      state.paginatedItems = state.filteredItems.slice(0, 12); // İlk 12 ürünü göster
-      state.currentPage = 1; // Sayfa numarasını 1 yap
+      state.totalPages = Math.ceil(state.filteredItems.length / 12);
+      state.paginatedItems = state.filteredItems.slice(0, 12);
+      state.currentPage = 1;
     },
     setModelFilter: (state, action) => {
       state.filters.model = action.payload;
@@ -71,10 +69,10 @@ const productSlice = createSlice({
         state.status = "loading";
       })
       .addCase(fetchAllProducts.fulfilled, (state, action) => {
-        state.allItems = action.payload; // Tüm ürünler allItems'a kaydediliyor
-        state.filteredItems = action.payload; // Başlangıçta filtreleme olmadan tüm ürünler gösterilecek
-        state.totalPages = Math.ceil(action.payload.length / 12); // Toplam sayfa sayısını hesapla
-        state.paginatedItems = action.payload.slice(0, 12); // İlk sayfa için 12 ürünü göster
+        state.allItems = action.payload;
+        state.filteredItems = action.payload;
+        state.totalPages = Math.ceil(action.payload.length / 12);
+        state.paginatedItems = action.payload.slice(0, 12);
         state.status = "succeeded";
       })
       .addCase(fetchAllProducts.rejected, (state) => {
@@ -83,25 +81,21 @@ const productSlice = createSlice({
   },
 });
 
-// Filtreleme ve sıralama işlemi
 const filterProducts = (products, filters) => {
   let filtered = [...products];
 
-  // Marka filtreleme
   if (filters.brand.length > 0) {
     filtered = filtered.filter((product) =>
       filters.brand.includes(product.brand),
     );
   }
 
-  // Model filtreleme
   if (filters.model.length > 0) {
     filtered = filtered.filter((product) =>
       filters.model.includes(product.model),
     );
   }
 
-  // Arama sorgusuna göre filtreleme
   if (filters.searchQuery) {
     filtered = filtered.filter(
       (product) =>
@@ -112,7 +106,6 @@ const filterProducts = (products, filters) => {
     );
   }
 
-  // Sıralama işlemi
   if (filters.sortBy === "price-low-to-high") {
     filtered.sort((a, b) => a.price - b.price);
   } else if (filters.sortBy === "price-high-to-low") {
