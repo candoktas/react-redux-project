@@ -31,15 +31,16 @@ const CartComponent = () => {
             key={item.id}
           >
             <div className="w-1/2">
-              <p>
-                {item.brand} {item.model}
-              </p>
+              <div>
+                <p>{item.brand}</p>
+                <span>{item.model}</span>
+              </div>
               {/* Burada fiyat miktar ile çarpılarak gösteriliyor */}
               <p className="text-sm">
                 {(item.price * item.quantity).toFixed(2)}₺
               </p>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center w-1/2">
               <button
                 className="bg-[#f3f4f6] px-3 py-1"
                 onClick={() => handleDecrement(item.id)}
@@ -60,9 +61,10 @@ const CartComponent = () => {
         ))}
       </div>
       <div className="shadow-lg p-4 mt-8">
-        <h4 className="text-lg font-bold mb-4">
+        <h4 className="text-lg font-bold mb-4" data-testid="total-price">
           Total Price: {totalPrice.toFixed(2)}₺
         </h4>
+
         <button className="bg-primary text-white py-2 px-4 w-full hover:bg-blue-600">
           Checkout
         </button>

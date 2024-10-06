@@ -11,13 +11,12 @@ const FilterComponent = () => {
   const { allItems: products } = useSelector((state) => state.products);
   const [brands, setBrands] = useState([]);
   const [models, setModels] = useState([]);
-  const [selectedBrands, setSelectedBrands] = useState([]); // Çoklu seçim için marka state
-  const [selectedModels, setSelectedModels] = useState([]); // Çoklu seçim için model state
+  const [selectedBrands, setSelectedBrands] = useState([]);
+  const [selectedModels, setSelectedModels] = useState([]);
   const [selectedSort, setSelectedSort] = useState("");
-  const [brandSearch, setBrandSearch] = useState(""); // Brand search için state
-  const [modelSearch, setModelSearch] = useState(""); // Model search için state
+  const [brandSearch, setBrandSearch] = useState("");
+  const [modelSearch, setModelSearch] = useState("");
 
-  // Unique brand ve model listeleri oluşturma
   useEffect(() => {
     if (products.length > 0) {
       const uniqueBrands = [
@@ -31,7 +30,6 @@ const FilterComponent = () => {
     }
   }, [products]);
 
-  // Marka filtreleme fonksiyonu
   const handleBrandChange = (e) => {
     const brand = e.target.value;
     const checked = e.target.checked;
@@ -39,18 +37,15 @@ const FilterComponent = () => {
     let updatedSelectedBrands = [...selectedBrands];
 
     if (checked) {
-      // Marka seçiliyse ekle
       updatedSelectedBrands.push(brand);
     } else {
-      // Marka seçili değilse çıkar
       updatedSelectedBrands = updatedSelectedBrands.filter((b) => b !== brand);
     }
 
-    setSelectedBrands(updatedSelectedBrands); // State'i güncelle
-    dispatch(setBrandFilter(updatedSelectedBrands)); // Filtreyi gönder
+    setSelectedBrands(updatedSelectedBrands);
+    dispatch(setBrandFilter(updatedSelectedBrands));
   };
 
-  // Model filtreleme fonksiyonu
   const handleModelChange = (e) => {
     const model = e.target.value;
     const checked = e.target.checked;
@@ -58,18 +53,15 @@ const FilterComponent = () => {
     let updatedSelectedModels = [...selectedModels];
 
     if (checked) {
-      // Model seçiliyse ekle
       updatedSelectedModels.push(model);
     } else {
-      // Model seçili değilse çıkar
       updatedSelectedModels = updatedSelectedModels.filter((m) => m !== model);
     }
 
-    setSelectedModels(updatedSelectedModels); // State'i güncelle
-    dispatch(setModelFilter(updatedSelectedModels)); // Filtreyi gönder
+    setSelectedModels(updatedSelectedModels);
+    dispatch(setModelFilter(updatedSelectedModels));
   };
 
-  // Sıralama seçeneği değiştirme
   const handleSortChange = (sortOption) => {
     if (selectedSort === sortOption) {
       setSelectedSort("");
@@ -80,12 +72,10 @@ const FilterComponent = () => {
     }
   };
 
-  // Brand'leri arama kutusuna göre filtreleme
   const filteredBrands = brands.filter((brand) =>
     brand.toLowerCase().includes(brandSearch.toLowerCase()),
   );
 
-  // Model'leri arama kutusuna göre filtreleme
   const filteredModels = models.filter((model) =>
     model.toLowerCase().includes(modelSearch.toLowerCase()),
   );
@@ -94,8 +84,8 @@ const FilterComponent = () => {
     <div className="p-4 rounded">
       <div className="shadow-lg p-2 mb-8">
         <h3 className="font-bold mb-4">Sort By</h3>
-        <ul className="mb-6">
-          <li className="flex items-center">
+        <ul className="mb-3">
+          <li className="flex items-center text-sm mb-2">
             <input
               type="radio"
               name="sort"
@@ -105,7 +95,7 @@ const FilterComponent = () => {
             />{" "}
             Old to New
           </li>
-          <li className="flex items-center">
+          <li className="flex items-center text-sm mb-2">
             <input
               type="radio"
               name="sort"
@@ -115,7 +105,7 @@ const FilterComponent = () => {
             />{" "}
             New to Old
           </li>
-          <li className="flex items-center">
+          <li className="flex items-center text-sm mb-2">
             <input
               type="radio"
               name="sort"
@@ -125,7 +115,7 @@ const FilterComponent = () => {
             />{" "}
             Price High to Low
           </li>
-          <li className="flex items-center">
+          <li className="flex items-center text-sm">
             <input
               type="radio"
               name="sort"
@@ -140,7 +130,7 @@ const FilterComponent = () => {
 
       <div className="shadow-lg p-2 mb-8">
         <h3 className="font-bold">Brands</h3>
-        <div className="p-2 rounded-md">
+        <div className="rounded-md">
           <div className="relative">
             <input
               type="text"
@@ -166,7 +156,7 @@ const FilterComponent = () => {
           </div>
           <ul className="max-h-24 overflow-y-auto">
             {filteredBrands.map((brand) => (
-              <li key={brand} className="flex items-center">
+              <li key={brand} className="flex items-center text-sm mb-1">
                 <input
                   type="checkbox"
                   value={brand}
@@ -183,7 +173,7 @@ const FilterComponent = () => {
 
       <div className="shadow-lg p-2">
         <h3 className="font-bold">Model</h3>
-        <div className="p-2 rounded-md">
+        <div className="rounded-md">
           <div className="relative">
             <input
               type="text"
@@ -209,7 +199,7 @@ const FilterComponent = () => {
           </div>
           <ul className="max-h-24 overflow-y-auto">
             {filteredModels.map((model) => (
-              <li key={model} className="flex items-center">
+              <li key={model} className="flex items-center text-sm mb-1">
                 <input
                   type="checkbox"
                   value={model}
