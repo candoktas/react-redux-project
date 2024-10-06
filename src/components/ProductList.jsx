@@ -1,19 +1,17 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllProducts } from "../store/slices/productSlice"; // fetchAllProducts'ı kullanıyoruz
+import { fetchAllProducts } from "../store/slices/productSlice";
 import { addToCart } from "../store/slices/cartSlice";
 import { Link } from "react-router-dom";
 
 const ProductList = () => {
   const dispatch = useDispatch();
-  const {
-    paginatedItems: products, // Pagination ile gelen ürünler
-    status,
-  } = useSelector((state) => state.products);
+  const { paginatedItems: products, status } = useSelector(
+    (state) => state.products,
+  );
 
-  // İlk sayfa yüklendiğinde tüm ürünleri fetch et
   useEffect(() => {
-    dispatch(fetchAllProducts()); // Tüm ürünleri çekiyoruz
+    dispatch(fetchAllProducts());
   }, [dispatch]);
 
   const handleAddToCart = (product) => {
@@ -35,20 +33,20 @@ const ProductList = () => {
           <Link
             to={`/product/${product.id}`}
             key={product.id}
-            className="block border p-4 rounded shadow-md hover:shadow-xl transition-all duration-200"
+            className="block p-4 rounded shadow-md hover:shadow-xl transition-all duration-200"
           >
             <img
               src={product.image}
               alt={product.name}
               className="w-full h-48 object-cover mb-4"
             />
-            <h3 className="text-lg font-bold">{product.brand}</h3>
-            <p className="text-lg font-semibold"> {product.model}</p>
-            <p className="text-blue-600 text-xl font-semibold">
+            <p className="text-primary text-sm font-medium mb-2">
               {product.price}₺
             </p>
+            <h3 className="text-sm font-bold">{product.brand}</h3>
+            <p className="text-sm font-medium"> {product.model}</p>
             <button
-              className="bg-primary text-white py-2 px-4 mt-2 w-full hover:bg-blue-600"
+              className="bg-primary text-base font-normal text-white py-2 px-4 mt-2 w-full hover:bg-blue-600"
               onClick={(e) => {
                 e.preventDefault();
                 handleAddToCart(product);

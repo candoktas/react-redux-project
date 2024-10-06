@@ -24,7 +24,7 @@ const CartComponent = () => {
   return (
     <div className="rounded">
       <div className="shadow-lg px-4 pb-2">
-        <h3 className="font-bold mb-4 px-2">Your Cart</h3>
+        <h3 className="font-bold text-sm mb-4 px-2 pt-2">Your Cart</h3>
         {cartItems.map((item) => (
           <div
             className="p-2 mb-4 flex justify-between items-center flex-wrap"
@@ -32,11 +32,11 @@ const CartComponent = () => {
           >
             <div className="w-1/2">
               <div>
-                <p>{item.brand}</p>
-                <span>{item.model}</span>
+                <p className="text-xs">{item.brand}</p>
+                <span className="text-xs">{item.model}</span>
               </div>
               {/* Burada fiyat miktar ile çarpılarak gösteriliyor */}
-              <p className="text-sm">
+              <p className="text-xs">
                 {(item.price * item.quantity).toFixed(2)}₺
               </p>
             </div>
@@ -60,9 +60,12 @@ const CartComponent = () => {
           </div>
         ))}
       </div>
-      <div className="shadow-lg p-4 mt-8">
-        <h4 className="text-lg font-bold mb-4" data-testid="total-price">
-          Total Price: {totalPrice.toFixed(2)}₺
+      <div className="shadow-lg p-4 mt-5">
+        <h4 className="text-sm font-normal mb-4" data-testid="total-price">
+          Total Price:{" "}
+          <span className="text-primary font-bold">
+            {totalPrice.toFixed(2)}₺
+          </span>
         </h4>
 
         <button className="bg-primary text-white py-2 px-4 w-full hover:bg-blue-600">
