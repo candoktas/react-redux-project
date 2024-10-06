@@ -10,17 +10,128 @@ const Pagination = () => {
     dispatch(setPage(page));
   };
 
-  return (
-    <div className="flex justify-center my-4">
-      {Array.from({ length: totalPages }, (_, index) => (
+  const renderPagination = () => {
+    const paginationItems = [];
+    const maxPagesToShow = 5;
+
+    // İlk sayfa
+    paginationItems.push(
+      <button
+        key={1}
+        className={`px-3 py-1 rounded-lg mx-1 hover:text-primary ${
+          currentPage === 1
+            ? "bg-white text-primary shadow-md"
+            : "text-gray-500"
+        }`}
+        onClick={() => handlePageChange(1)}
+      >
+        1
+      </button>,
+    );
+
+    if (currentPage > maxPagesToShow) {
+      paginationItems.push(
+        <span key="dots1" className="px-2 text-gray-400">
+          ...
+        </span>,
+      );
+    }
+
+    // Ortadaki sayfalar
+    for (
+      let i = Math.max(2, currentPage - 1);
+      i <= Math.min(totalPages - 1, currentPage + 1);
+      i++
+    ) {
+      paginationItems.push(
         <button
-          key={index}
-          className={`px-4 py-2 mx-1 ${currentPage === index + 1 ? "bg-blue-500 text-white" : "bg-gray-200"}`}
-          onClick={() => handlePageChange(index + 1)}
+          key={i}
+          className={`px-3 py-1 rounded-lg mx-1 hover:text-primary ${
+            currentPage === i
+              ? "bg-white text-primary shadow-md"
+              : "text-gray-500"
+          }`}
+          onClick={() => handlePageChange(i)}
         >
-          {index + 1}
-        </button>
-      ))}
+          {i}
+        </button>,
+      );
+    }
+
+    if (currentPage < totalPages - maxPagesToShow) {
+      paginationItems.push(
+        <span key="dots2" className="px-2 text-gray-400">
+          ...
+        </span>,
+      );
+    }
+
+    // Son sayfa
+    paginationItems.push(
+      <button
+        key={totalPages}
+        className={`px-3 py-1 rounded-lg mx-1 hover:text-primary ${
+          currentPage === totalPages
+            ? "bg-white text-primary shadow-md"
+            : "text-gray-500"
+        }`}
+        onClick={() => handlePageChange(totalPages)}
+      >
+        {totalPages}
+      </button>,
+    );
+
+    return paginationItems;
+  };
+
+  return (
+    <div className="flex justify-center items-center space-x-2 my-4">
+      {/* Sol ok tuşu */}
+      <button
+        className={`px-3 py-1 rounded-lg disabled:pointer-events-none ${
+          currentPage === 1 ? "text-gray-400" : "text-gray-500"
+        }`}
+        onClick={() => handlePageChange(currentPage - 1)}
+        disabled={currentPage === 1}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="1"
+          stroke="currentColor"
+          className="w-5 h-5 hover:stroke-purple-400 "
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M15 19l-7-7 7-7"
+          />
+        </svg>
+      </button>
+
+      {/* Sayfa numaraları */}
+      {renderPagination()}
+
+      {/* Sağ ok tuşu */}
+      <button
+        className={`px-3 py-1 rounded-lg disabled:pointer-events-none ${
+          currentPage === totalPages ? "text-gray-400" : "text-gray-500"
+        }`}
+        onClick={() => handlePageChange(currentPage + 1)}
+        disabled={currentPage === totalPages}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="1"
+          stroke="currentColor"
+          className="w-5 h-5 hover:stroke-purple-400"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
     </div>
   );
 };

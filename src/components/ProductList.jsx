@@ -35,7 +35,7 @@ const ProductList = () => {
           <Link
             to={`/product/${product.id}`}
             key={product.id}
-            className="block border p-4 rounded shadow-lg"
+            className="block border p-4 rounded shadow-md hover:shadow-xl transition-all duration-200"
           >
             <img
               src={product.image}
@@ -48,7 +48,7 @@ const ProductList = () => {
               {product.price}₺
             </p>
             <button
-              className="bg-blue-500 text-white py-2 px-4 mt-2 w-full hover:bg-blue-600"
+              className="bg-primary text-white py-2 px-4 mt-2 w-full hover:bg-blue-600"
               onClick={(e) => {
                 e.preventDefault();
                 handleAddToCart(product);

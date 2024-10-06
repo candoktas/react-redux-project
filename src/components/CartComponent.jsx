@@ -24,13 +24,13 @@ const CartComponent = () => {
   return (
     <div className="rounded">
       <div className="shadow-lg px-4 pb-2">
-        <h3 className="font-bold mb-4 px-2">Sepetiniz</h3>
+        <h3 className="font-bold mb-4 px-2">Your Cart</h3>
         {cartItems.map((item) => (
           <div
-            className="p-2 mb-4 flex justify-between items-center"
+            className="p-2 mb-4 flex justify-between items-center flex-wrap"
             key={item.id}
           >
-            <div>
+            <div className="w-1/2">
               <p>
                 {item.brand} {item.model}
               </p>
@@ -63,7 +63,7 @@ const CartComponent = () => {
         <h4 className="text-lg font-bold mb-4">
           Total Price: {totalPrice.toFixed(2)}₺
         </h4>
-        <button className="bg-blue-500 text-white py-2 px-4 w-full hover:bg-blue-600">
+        <button className="bg-primary text-white py-2 px-4 w-full hover:bg-blue-600">
           Checkout
         </button>
       </div>

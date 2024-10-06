@@ -92,96 +92,136 @@ const FilterComponent = () => {
 
   return (
     <div className="p-4 rounded">
-      <h3 className="font-bold mb-4">Sort By</h3>
-      <ul className="mb-6">
-        <li>
-          <input
-            type="radio"
-            name="sort"
-            checked={selectedSort === "old-to-new"}
-            onChange={() => handleSortChange("old-to-new")}
-          />{" "}
-          Old to New
-        </li>
-        <li>
-          <input
-            type="radio"
-            name="sort"
-            checked={selectedSort === "new-to-old"}
-            onChange={() => handleSortChange("new-to-old")}
-          />{" "}
-          New to Old
-        </li>
-        <li>
-          <input
-            type="radio"
-            name="sort"
-            checked={selectedSort === "price-high-to-low"}
-            onChange={() => handleSortChange("price-high-to-low")}
-          />{" "}
-          Price High to Low
-        </li>
-        <li>
-          <input
-            type="radio"
-            name="sort"
-            checked={selectedSort === "price-low-to-high"}
-            onChange={() => handleSortChange("price-low-to-high")}
-          />{" "}
-          Price Low to High
-        </li>
-      </ul>
-
-      <h3 className="font-bold my-4">Brands</h3>
-      <div className="border p-2 rounded-md">
-        {/* Sabit kalan Search input */}
-        <input
-          type="text"
-          placeholder="Search Brands"
-          value={brandSearch}
-          onChange={(e) => setBrandSearch(e.target.value)} // Arama kutusuna yazılanları güncelle
-          className="w-full p-2 mb-2 border rounded text-gray-600"
-        />
-        {/* Yalnızca liste için scroll */}
-        <ul className="max-h-24 overflow-y-auto">
-          {filteredBrands.map((brand) => (
-            <li key={brand}>
-              <input
-                type="checkbox"
-                value={brand}
-                checked={selectedBrands.includes(brand)} // Seçili olup olmadığını kontrol et
-                onChange={handleBrandChange}
-              />{" "}
-              {brand}
-            </li>
-          ))}
+      <div className="shadow-lg p-2 mb-8">
+        <h3 className="font-bold mb-4">Sort By</h3>
+        <ul className="mb-6">
+          <li className="flex items-center">
+            <input
+              type="radio"
+              name="sort"
+              checked={selectedSort === "old-to-new"}
+              onChange={() => handleSortChange("old-to-new")}
+              className="w-4 h-4 mr-2"
+            />{" "}
+            Old to New
+          </li>
+          <li className="flex items-center">
+            <input
+              type="radio"
+              name="sort"
+              checked={selectedSort === "new-to-old"}
+              onChange={() => handleSortChange("new-to-old")}
+              className="mr-2 w-4 h-4"
+            />{" "}
+            New to Old
+          </li>
+          <li className="flex items-center">
+            <input
+              type="radio"
+              name="sort"
+              checked={selectedSort === "price-high-to-low"}
+              onChange={() => handleSortChange("price-high-to-low")}
+              className="mr-2 w-4 h-4"
+            />{" "}
+            Price High to Low
+          </li>
+          <li className="flex items-center">
+            <input
+              type="radio"
+              name="sort"
+              checked={selectedSort === "price-low-to-high"}
+              onChange={() => handleSortChange("price-low-to-high")}
+              className="mr-2 w-4 h-4"
+            />{" "}
+            Price Low to High
+          </li>
         </ul>
       </div>
 
-      <h3 className="font-bold my-4">Model</h3>
-      <div className="border p-2 rounded-md">
-        {/* Sabit kalan Search input */}
-        <input
-          type="text"
-          placeholder="Search Models"
-          value={modelSearch}
-          onChange={(e) => setModelSearch(e.target.value)} // Arama kutusuna yazılanları güncelle
-          className="w-full p-2 mb-2 border rounded text-gray-600"
-        />
-        {/* Yalnızca liste için scroll */}
-        <ul className="max-h-24 overflow-y-auto">
-          {filteredModels.map((model) => (
-            <li key={model}>
-              <input
-                type="checkbox"
-                value={model}
-                checked={selectedModels.includes(model)} // Seçili olup olmadığını kontrol et
-                onChange={handleModelChange}
-              />{" "}
-              {model}
-            </li>
-          ))}
-        </ul>
+      <div className="shadow-lg p-2 mb-8">
+        <h3 className="font-bold">Brands</h3>
+        <div className="p-2 rounded-md">
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Search Brands"
+              value={brandSearch}
+              onChange={(e) => setBrandSearch(e.target.value)}
+              className="w-full bg-[#fafafb] p-2 mb-2 pl-10 rounded text-gray-600"
+            />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="absolute left-2 top-[21px] transform -translate-y-1/2 w-5 h-5 text-gray-500"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+              />
+            </svg>
+          </div>
+          <ul className="max-h-24 overflow-y-auto">
+            {filteredBrands.map((brand) => (
+              <li key={brand} className="flex items-center">
+                <input
+                  type="checkbox"
+                  value={brand}
+                  checked={selectedBrands.includes(brand)}
+                  onChange={handleBrandChange}
+                  className="mr-1 w-4 h-4"
+                />{" "}
+                {brand}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <div className="shadow-lg p-2">
+        <h3 className="font-bold">Model</h3>
+        <div className="p-2 rounded-md">
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Search Models"
+              value={modelSearch}
+              onChange={(e) => setModelSearch(e.target.value)}
+              className="w-full bg-[#fafafb] p-2 mb-2 pl-10 rounded text-gray-600"
+            />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="absolute left-2 top-[21px] transform -translate-y-1/2 w-5 h-5 text-gray-500"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+              />
+            </svg>
+          </div>
+          <ul className="max-h-24 overflow-y-auto">
+            {filteredModels.map((model) => (
+              <li key={model} className="flex items-center">
+                <input
+                  type="checkbox"
+                  value={model}
+                  checked={selectedModels.includes(model)}
+                  onChange={handleModelChange}
+                  className="mr-1 w-4 h-4"
+                />{" "}
+                {model}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );
